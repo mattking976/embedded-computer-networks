@@ -224,7 +224,7 @@
       <DebugFlag>
         <trace>0</trace>
         <periodic>1</periodic>
-        <aLwin>1</aLwin>
+        <aLwin>0</aLwin>
         <aCover>0</aCover>
         <aSer1>0</aSer1>
         <aSer2>0</aSer2>
@@ -275,8 +275,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\src\a_traffic_light.c</PathWithFileName>
-      <FilenameWithoutPath>a_traffic_light.c</FilenameWithoutPath>
+      <PathWithFileName>..\src\b_led_dice.c</PathWithFileName>
+      <FilenameWithoutPath>b_led_dice.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
