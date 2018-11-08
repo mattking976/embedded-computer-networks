@@ -26,6 +26,8 @@ const char * welcome_Message[2] =
 	"*      Welcome to SHU      *"
 };
 
+gpio_pin_t pot = {PA_0, GPIOA, GPIO_PIN_0};
+
 // this is the main method
 int main()
 {
@@ -33,20 +35,42 @@ int main()
   // properly
   HAL_Init();
   init_sysclk_216MHz();
+	init_adc(pot);
 	
 	BSP_LCD_Init();
 	BSP_LCD_LayerDefaultInit(LTDC_ACTIVE_LAYER, SDRAM_DEVICE_ADDR);
 	BSP_LCD_SelectLayer(LTDC_ACTIVE_LAYER);
 	
+	// show the header
 	BSP_LCD_SetBackColor(LCD_COLOR_BLACK);
 	BSP_LCD_Clear(LCD_COLOR_BLACK);
 	
 	BSP_LCD_SetFont(&Font24);
 	
-	BSP_LCD_SetTextColor(LCD_COLOR_WHITE);
+	BSP_LCD_SetTextColor(LCD_COLOR_GREEN);
 	BSP_LCD_DisplayStringAtLine(0, (uint8_t *)BOARDER);
 	BSP_LCD_DisplayStringAtLine(1, (uint8_t *)welcome_Message[0]);
 	BSP_LCD_DisplayStringAtLine(2, (uint8_t *)welcome_Message[1]);
 	BSP_LCD_DisplayStringAtLine(3, (uint8_t *)BOARDER);
-	HAL_Delay(5);
+	
+	// loop
+	while(1)
+	{
+		uint16_t adc_val = read_adc(pot);
+		char str[20];
+		sprintf(str, "ADC = %4d", adc_val);
+		BSP_LCD_ClearStringLine(6);
+		BSP_LCD_DisplayStringAtLine(6, (uint8_t *)str);
+		
+		sprintf(str, "ADC percent = %4f", (adc_val/4095.0)*100);
+		BSP_LCD_ClearStringLine(7);
+		BSP_LCD_DisplayStringAtLine(7, (uint8_t *)str);
+		
+		BSP_LCD_SetTextColor(LCD_COLOR_BLACK);
+		BSP_LCD_FillRect(0, 200, 480, 20);
+		BSP_LCD_SetTextColor(LCD_COLOR_GREEN);
+		BSP_LCD_FillRect(0, 200, (480*(adc_val/4095.0)), 20);
+		
+		HAL_Delay(75);
+	}
 }
