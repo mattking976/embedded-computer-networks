@@ -62,7 +62,7 @@ int main()
 		BSP_LCD_ClearStringLine(6);
 		BSP_LCD_DisplayStringAtLine(6, (uint8_t *)str);
 		
-		sprintf(str, "ADC percent = %4f", ((((adc_val/4095.0)*3300.0) -500 )/10.0));
+		sprintf(str, "Temperature = %4f", ((((adc_val/4095.0)*3300.0) -500 )/10.0));
 		BSP_LCD_ClearStringLine(7);
 		BSP_LCD_DisplayStringAtLine(7, (uint8_t *)str);
 		
