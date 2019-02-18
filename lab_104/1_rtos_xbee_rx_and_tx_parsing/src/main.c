@@ -36,6 +36,35 @@ void HAL_Delay(__IO uint32_t Delay)
 	osDelay(Delay);
 }
 
+//processing xbee packets function
+void process_packet(uint8_t* packet,int length)
+{
+	if (packet[3] == 0x92)
+	{
+		printf("xbee long address is: ");
+		int i = 0;
+		for(i = 4; i < 12; i++)
+		{
+			printf("%02X", packet[i]);
+		}
+		printf("\r\n");
+		
+		//print the xbee short address
+		printf("this is the xbee ");
+		printf("%02X %02X \r\n", packet[12], packet[13]);
+		int datastart = 16;
+		if(datastart < (length - 1))
+		{
+			printf("data = ");
+			while(datastart < (length - 1))
+			{
+				printf("%02X", packet[datastart++]);
+			}
+			printf("\r\n");
+		}
+	}
+}
+
 // XBEE
 
 // xbee configuration packets
