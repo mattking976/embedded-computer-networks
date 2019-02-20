@@ -7,7 +7,7 @@
 
   <Targets>
     <Target>
-      <TargetName>rtos_blinky</TargetName>
+      <TargetName>lcd_example</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <pCCUsed>5060528::V5.06 update 5 (build 528)::ARMCC</pCCUsed>
@@ -138,7 +138,7 @@
           </Flash1>
           <bUseTDR>1</bUseTDR>
           <Flash2>BIN\UL2CM3.DLL</Flash2>
-          <Flash3>"" ()</Flash3>
+          <Flash3></Flash3>
           <Flash4></Flash4>
           <pFcarmOut></pFcarmOut>
           <pFcarmGrp></pFcarmGrp>
@@ -187,7 +187,7 @@
             <hadIRAM2>1</hadIRAM2>
             <hadIROM2>1</hadIROM2>
             <StupSel>8</StupSel>
-            <useUlib>0</useUlib>
+            <useUlib>1</useUlib>
             <EndSel>0</EndSel>
             <uLtcg>0</uLtcg>
             <nSecure>0</nSecure>
@@ -336,7 +336,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F746xx</Define>
               <Undefine></Undefine>
-              <IncludePath>..\inc;..\..\..\libraries\cmsis\core\inc;..\..\..\libraries\cmsis\rtos\inc;..\..\..\libraries\bsp\stm32f7_family\inc;..\..\..\libraries\bsp\stm32f7_discovery\inc;..\..\..\libraries\bsp\stm32f7_discovery_shu_kit\inc;..\..\..\libraries\stm32f7xx_hal\inc;..\..\..\libraries\stm32f7xx_hal\inc\legacy</IncludePath>
+              <IncludePath>..\inc;..\..\..\libraries\cmsis\core\inc;..\..\..\libraries\bsp\stm32f7_family\inc;..\..\..\libraries\bsp\stm32f7_discovery\bsp\inc;..\..\..\libraries\bsp\stm32f7_discovery_shu_kit\inc;..\..\..\libraries\stm32f7xx_hal\inc;..\..\..\libraries\stm32f7xx_hal\inc\legacy</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -385,20 +385,15 @@
               <FileType>1</FileType>
               <FilePath>..\src\main.c</FilePath>
             </File>
-            <File>
-              <FileName>blinky_thread.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\src\blinky_thread.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
           <GroupName>configuration</GroupName>
           <Files>
             <File>
-              <FileName>rtx_conf_cm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\src\rtx_conf_cm.c</FilePath>
+              <FileName>startup_stm32f746xx.s</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\startup_stm32f746xx.s</FilePath>
             </File>
             <File>
               <FileName>system_stm32f7xx.c</FileName>
@@ -406,19 +401,19 @@
               <FilePath>..\src\system_stm32f7xx.c</FilePath>
             </File>
             <File>
-              <FileName>startup_stm32f746xx.s</FileName>
-              <FileType>2</FileType>
-              <FilePath>.\startup_stm32f746xx.s</FilePath>
+              <FileName>stm32f7xx_hal_conf.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\inc\stm32f7xx_hal_conf.h</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f7xx_it.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\inc\stm32f7xx_it.h</FilePath>
             </File>
             <File>
               <FileName>stm32f7xx_it.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\src\stm32f7xx_it.c</FilePath>
-            </File>
-            <File>
-              <FileName>stm32f7xx_hal_conf.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\inc\stm32f7xx_hal_conf.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -609,6 +604,11 @@
               <FileName>stm32f7xx_hal_mmc.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\..\libraries\stm32f7xx_hal\src\stm32f7xx_hal_mmc.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f7xx_hal_msp_template.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\libraries\stm32f7xx_hal\src\stm32f7xx_hal_msp_template.c</FilePath>
             </File>
             <File>
               <FileName>stm32f7xx_hal_nand.c</FileName>
@@ -868,12 +868,32 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>cmsis-rtos</GroupName>
+          <GroupName>stm32f7_discovery_bsp</GroupName>
           <Files>
             <File>
-              <FileName>RTX_CM4.lib</FileName>
-              <FileType>4</FileType>
-              <FilePath>..\..\..\libraries\cmsis\rtos\lib\RTX_CM4.lib</FilePath>
+              <FileName>stm32746g_discovery.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\libraries\bsp\stm32f7_discovery\bsp\src\stm32746g_discovery.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32746g_discovery_lcd.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\libraries\bsp\stm32f7_discovery\bsp\src\stm32746g_discovery_lcd.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32746g_discovery_sdram.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\libraries\bsp\stm32f7_discovery\bsp\src\stm32746g_discovery_sdram.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32746g_discovery_ts.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\libraries\bsp\stm32f7_discovery\bsp\src\stm32746g_discovery_ts.c</FilePath>
+            </File>
+            <File>
+              <FileName>ft5336.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\..\libraries\bsp\stm32f7_discovery\components\ft5336\ft5336.c</FilePath>
             </File>
           </Files>
         </Group>
